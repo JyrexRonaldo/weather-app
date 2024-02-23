@@ -1,8 +1,6 @@
 import "./reset.css";
 import "./style.css";
 
-//  document.querySelector("body").style.backgroundColor = "red"
-
 async function getWeatherData(location) {
   try {
     const response = await fetch(
@@ -21,7 +19,6 @@ async function getWeatherData(location) {
 async function getLocationData(location) {
   const data = await getWeatherData(location);
   const { name, country } = data.location;
-  // console.log({name, country});
   return { name, country };
 }
 
@@ -35,9 +32,18 @@ async function getCurrentData(location) {
     humidity,
     is_day: isDay,
   } = data.current;
-  //   console.log({  });
-  const {text: conditionText, icon: conditionIconURL} = data.current.condition;
-  return { tempC, tempF, feelsLikeC, feelsLikeF, humidity, isDay, conditionText, conditionIconURL };
+  const { text: conditionText, icon: conditionIconURL } =
+    data.current.condition;
+  return {
+    tempC,
+    tempF,
+    feelsLikeC,
+    feelsLikeF,
+    humidity,
+    isDay,
+    conditionText,
+    conditionIconURL,
+  };
 }
 
 async function getForecastData(location) {
@@ -50,11 +56,13 @@ async function getForecastData(location) {
     avgvis_km: avgVisKm,
     daily_chance_of_rain: dailyChanceOfRain,
     daily_will_it_rain: dailyWillItRain,
+    maxtemp_c: maxTempC,
+    maxtemp_f: maxTempF,
+    mintemp_c: minTempC,
+    mintemp_f: minTempF,
   } = data.forecast.forecastday[0].day;
   const { text: conditionText, icon: conditionIconURL } =
     data.forecast.forecastday[0].day.condition;
-  //   console.log();
-
   return {
     date,
     avghumidity,
@@ -65,9 +73,13 @@ async function getForecastData(location) {
     dailyWillItRain,
     conditionText,
     conditionIconURL,
+    maxTempC,
+    maxTempF,
+    minTempC,
+    minTempF,
   };
 }
 
-getCurrentData("ahinsan");
-getLocationData("ahinsan");
-getForecastData("ahinsan");
+getCurrentData("seattle");
+getLocationData("nigeria");
+getForecastData("china");
