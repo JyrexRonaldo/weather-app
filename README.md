@@ -1,3 +1,3 @@
 # weather-app
 
-[Live Demo]() :point_left:
+[Live Demo](https://jyrexronaldo.github.io/weather-app/) :point_left:
