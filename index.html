@@ -1,1 +1,119 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Weather App</title><script defer="defer" src="main.js"></script></head><body><div><div class="location"><p>Concord</p><p>United States of America</p><p>12C</p><p>Mist</p></div><div class="search"><input name="location" id="location" placeholder="Search a location..."/><div><p>Weather App <img src="" alt="weather logo"/></p></div></div><div class="forecast"><p>3 Days Forecast</p><div><div><p>Today</p><img src="" alt=""/><p>Sunny</p><div><p>20c</p><p>40c</p><p>60c</p></div></div><div><p>Tomorrow</p><img src="" alt=""/><p>Sunny</p><div><p>20c</p><p>40c</p><p>60c</p></div></div><div><p>After tomorrow</p><img src="" alt=""/><p>Sunny</p><div><p>20c</p><p>40c</p><p>60c</p></div></div></div></div><div class="current"><div><div><img src="" alt=""><p>Chance of rain</p></div><p>0%</p></div><div><div><img src="" alt=""><p>Pressure</p></div><p>1010hPa</p></div><div><div><img src="" alt=""><p>Visibility</p></div><p>10km</p></div><div><div><img src="" alt=""><p>Sunrise</p></div><p>06:14 AM</p></div><div><div><img src="" alt=""><p>Sunset</p></div><p>06:14 AM</p></div><div><div><img src="" alt=""><p>Humidity</p></div><p>5</p></div></div></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+  <script defer src="main.js"></script></head>
+
+  <body>
+    <div>
+      <div class="location">
+        <p>Concord</p>
+        <p>United States of America</p>
+        <p>12C</p>
+        <p>Mist</p>
+      </div>
+      <div class="search">
+        <div>
+          <!-- <img src="" alt="magnify-icon"> -->
+          <span></span>
+          <input
+            type="search"
+            name="location"
+            id="location"
+            placeholder="Search a location..."
+          />
+        </div>
+        <div>
+          <p>Weather App </p>
+          <!-- <img src="" alt="weather-logo" /> -->
+          <span></span>
+        </div>
+      </div>
+      <div class="forecast">
+        <p>3 Days Forecast</p>
+        <div>
+          <table>
+            <tr>
+              <th><p>Days</p></th>
+              <th>&nbsp</th>
+              <th><p>Condition</p></th>
+              <th><p>Low</p></th>
+              <th><p>Daily Average</p></th>
+              <th><p>Daily High</p></th>
+            </tr>
+            <tr>
+              <td><p>Today</p></td>
+              <td><span></span></td>
+              <td><p>Sunny</p></td>
+              <td><p>20c</p></td>
+              <td><p>40c</p></td>
+              <td><p>60c</p></td>
+            </tr>
+            <tr>
+              <td><p>Tomorrow</p></td>
+              <td><span></span></td>
+              <td><p>Sunny</p></td>
+              <td><p>20c</p></td>
+              <td><p>40c</p></td>
+              <td><p>60c</p></td>
+            </tr>
+            <tr>
+              <td><p>After Tomorrow</p></td>
+              <td><span></span></td>
+              <td><p>Sunny</p></td>
+              <td><p>20c</p></td>
+              <td><p>40c</p></td>
+              <td><p>60c</p></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="current">
+        <div>
+            <div>
+                <span></span>
+                <p>Chance of rain</p>
+            </div>
+            <p>0%</p>
+        </div>
+        <div>
+            <div>
+                <span></span>
+                <p>Pressure</p>
+            </div>
+            <p>1010hPa</p>
+        </div>
+        <div>
+            <div>
+                <span></span>
+                <p>Visibility</p>
+            </div>
+            <p>10km</p>
+        </div>
+        <div>
+            <div>
+                <span></span>
+                <p>Sunrise</p>
+            </div>
+            <p>06:14 AM</p>
+        </div>
+        <div>
+            <div>
+                <span></span>
+                <p>Sunset</p>
+            </div>
+            <p>06:14 AM</p>
+        </div>
+        <div>
+            <div>
+                <span></span>
+                <p>Humidity</p>
+            </div>
+            <p>5</p>
+        </div>
+    </div>
+    </div>
+  </body>
+</html>
