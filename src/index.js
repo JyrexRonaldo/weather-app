@@ -50,7 +50,7 @@ async function getForecastData(location) {
   const data = await getWeatherData(location);
   const { date } = data.forecast.forecastday[0];
   const {
-    avghumidity,
+    avghumidity: avgHumidity,
     avgtemp_c: avgTempC,
     avgtemp_f: avgTempF,
     avgvis_km: avgVisKm,
@@ -65,7 +65,7 @@ async function getForecastData(location) {
     data.forecast.forecastday[0].day.condition;
   return {
     date,
-    avghumidity,
+    avgHumidity,
     avgTempC,
     avgTempF,
     avgVisKm,
