@@ -11,6 +11,7 @@ html {
 body {
   height: 100vh;
   background: linear-gradient(to bottom, #1d9ba4 0%, #2388cb 50%, #2e2775 100%);
+  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +42,7 @@ body > div > div:not(:nth-child(2)) {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  text-align: center;
 }
 
 .location p:first-child {
@@ -63,7 +65,7 @@ body > div > div:not(:nth-child(2)) {
 
 .location p:last-child {
   margin-top: 20%;
-  font-size: 5rem;
+  font-size: 2.5rem;
   font-weight: 100;
   color: #68c9be;
 }
@@ -96,9 +98,11 @@ body > div > div:not(:nth-child(2)) {
 .search input {
   background: none;
   border: none;
-  width: 530px;
+  width: 510px;
   height: 40px;
   font-size: 1.5rem;
+  color: white;
+  
 }
 
 .search input:focus {
@@ -127,7 +131,7 @@ body > div > div:not(:nth-child(2)) {
 
 
 ::placeholder {
-  color: black;
+  color: white;
 }
 
 .forecast {
@@ -187,14 +191,47 @@ table {
     text-align: center;
   }
 
-  .current span {
-    content: url(./assets/113.png);
+  .current > div:nth-child(1) span {
+    content: url(./assets/rain.svg);
+    width: 40px;
+    height: auto;
+  }
+
+  .current > div:nth-child(2) span {
+    content: url(./assets/pressure.svg);
+    width: 40px;
+    height: auto;
+  }
+
+  .current > div:nth-child(3) span {
+    content: url(./assets/visibility.svg);
+    width: 40px;
+    height: auto;
+  }
+
+  .current > div:nth-child(4) span {
+    content: url(./assets/sunrise.svg);
+    width: 40px;
+    height: auto;
+  }
+
+  .current > div:nth-child(5) span {
+    content: url(./assets/sunset.svg);
+    width: 40px;
+    height: auto;
+  }
+
+  .current > div:nth-child(6) span {
+    content: url(./assets/humidity.svg);
+    width: 40px;
+    height: auto;
   }
 
   
   .current > div > div {
     display: flex;
     align-items: center;
+    gap: 5px;
   }
 
   .current p {
