@@ -83,3 +83,8 @@ async function getForecastData(location) {
 getCurrentData("seattle");
 getLocationData("nigeria");
 getForecastData("china");
+
+
+const imgSp = document.querySelector("img")
+
+console.log(imgSp.src)
