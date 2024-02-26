@@ -80,13 +80,9 @@ function getForecastData(data, day) {
   };
 }
 
-
-
-
- (function () {
- 
+(function () {
   // const code = 1;
-  
+
   const locationNameDiv = document.querySelector(".location p:first-child");
   const locationCountryNameDiv = document.querySelector(
     ".location p:nth-child(2)"
@@ -118,9 +114,10 @@ function getForecastData(data, day) {
 
   const forecasts = document.querySelectorAll("tbody tr");
 
-  const searchBar = document.querySelector("[type=search")
+  const searchBar = document.querySelector("[type=search");
 
-  
+  const dropDownList = document.querySelector(".drop-down");
+
   async function getLocation(location) {
     try {
       const response = await fetch(
@@ -128,51 +125,80 @@ function getForecastData(data, day) {
         { mode: "cors" }
       );
       const searchData = await response.json();
-      console.log(searchData)
+      console.log(searchData);
 
       if ("error" in searchData) {
-        return "Please enter a search query"
+        return ["Please enter a search query"];
       }
 
       if (Object.keys(searchData).length === 0) {
-        return "No location has been found"
+        return ["No location has been found"];
       }
 
-       return searchData;
+      return searchData;
     } catch {
       // alert("Unable to fetch data check internet connection")
       throw Error("Unable to fetch data check internet connection");
     }
   }
+
   
-  async function searchQueryHandler(query) {
-    const location = await getLocation(query)
-    console.log(location)
-   }  
   // console.log(searchBar)
 
-  searchBar.addEventListener("input", (e) => {
-    // console.log(e.target.value)
-    searchQueryHandler(e.target.value)
-  })
+  function createLocationList(locations) {
+    dropDownList.innerHTML = ""
+    
+    locations.forEach((item) => {
+      const list = document.createElement("li")
+      if (typeof item === "string") {
+        list.textContent = item
+      
+        }
 
+      if (typeof item === "object") {
+        const {name, country, id} = item
+        console.log(id)
+        list.textContent = `${name}, ${country}`
+        list.setAttribute("id", `id:${id}`)
+      }
+
+      dropDownList.append(list);
+    } )
+
+    
+  }
+
+
+
+  async function searchQueryHandler(query) {
+    const location = await getLocation(query);
+    createLocationList(location)
+    console.log(location);
+  }
+
+  searchBar.addEventListener("input", (e) => {
  
- 
-  
- 
-  
+    // console.log(e.target.value)
+     searchQueryHandler(e.target.value);
+    // createLocationList(locations);
+    console.log()
+    if (e.target.value === "") {
+      setTimeout(() => {
+        dropDownList.innerHTML = ""
+      }, 1000)
+    }
+  });
 
   async function updateDisplay(location, code) {
     // code 1 signals for temperature in celsius
     // and code 0 signals for temperature in fahrenheit
-    
-  
+
     const data = await getWeatherData(location);
-  
+
     const currentWeatherData = getCurrentData(data);
     const locationData = getLocationData(data);
     const currentDayData = getForecastData(data, 0);
-  
+
     locationNameDiv.textContent = locationData.name;
     locationCountryNameDiv.textContent = locationData.country;
     currentTemperatureDiv.textContent = code
@@ -185,25 +211,25 @@ function getForecastData(data, day) {
     currentChanceDiv.textContent = `${currentDayData.dailyChanceOfRain}%`;
     currentSunriseDiv.textContent = `${currentDayData.sunrise}`;
     currentSunsetDiv.textContent = `${currentDayData.sunset}`;
-  
+
     forecasts.forEach((tr, index) => {
       const day = getForecastData(data, index);
       const conditionImg = document.createElement("img");
       conditionImg.alt = "condition-icon";
       conditionImg.src = day.conditionIconURL;
-  
+
       const conditionTxt = document.createElement("p");
       conditionTxt.textContent = day.conditionText;
-  
+
       const lowTemp = document.createElement("p");
       lowTemp.textContent = code ? `${day.minTempC}°C` : `${day.minTempF}°F`;
-  
+
       const avgTemp = document.createElement("p");
       avgTemp.textContent = code ? `${day.avgTempC}°C` : `${day.avgTempF}°F`;
-  
+
       const highTemp = document.createElement("p");
       highTemp.textContent = code ? `${day.maxTempC}°C` : `${day.maxTempF}°F`;
-  
+
       const cells = [...tr.querySelectorAll("td")];
       const information = [
         conditionImg,
@@ -221,7 +247,8 @@ function getForecastData(data, day) {
       });
     });
   }
-  
-  updateDisplay("slovenia", 1);
-  
+
+
+
+  updateDisplay("id:2107568", 1);
 })();
