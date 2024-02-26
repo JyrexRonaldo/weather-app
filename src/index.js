@@ -241,14 +241,18 @@ function getForecastData(data, day) {
       let i = 0;
       cells.forEach((cell, pos) => {
         if (pos !== 0) {
-          cell.append(information[i]);
+          const td = cell
+          td.innerHTML = ""
+          td.append(information[i]);
           i += 1;
         }
       });
     });
   }
 
-
+dropDownList.addEventListener("click", (e) => {
+  updateDisplay(e.target.id, 0)
+})
 
   updateDisplay("id:2107568", 1);
 })();
