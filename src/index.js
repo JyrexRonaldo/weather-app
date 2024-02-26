@@ -80,11 +80,13 @@ function getForecastData(data, day) {
   };
 }
 
-async function updateDisplay(location) {
-  // code 1 signals for temperature in celsius
-  // and code 0 signals for temperature in fahrenheit
-  const code = 1;
 
+
+
+ (function () {
+ 
+  // const code = 1;
+  
   const locationNameDiv = document.querySelector(".location p:first-child");
   const locationCountryNameDiv = document.querySelector(
     ".location p:nth-child(2)"
@@ -116,59 +118,110 @@ async function updateDisplay(location) {
 
   const forecasts = document.querySelectorAll("tbody tr");
 
-  const data = await getWeatherData(location);
+  const searchBar = document.querySelector("[type=search")
 
-  const currentWeatherData = getCurrentData(data);
-  const locationData = getLocationData(data);
-  const currentDayData = getForecastData(data, 0);
+  
+  async function getLocation(location) {
+    try {
+      const response = await fetch(
+        `http://api.weatherapi.com/v1/search.json?key=0ccde67d368a424faf4213636240401&q=${location}`,
+        { mode: "cors" }
+      );
+      const searchData = await response.json();
+      console.log(searchData)
 
-  locationNameDiv.textContent = locationData.name;
-  locationCountryNameDiv.textContent = locationData.country;
-  currentTemperatureDiv.textContent = code
-    ? `${currentWeatherData.tempC}°C`
-    : `${currentWeatherData.tempF}°F`;
-  currentConditionTextDiv.textContent = currentWeatherData.conditionText;
-  currentPressureDiv.textContent = `${currentWeatherData.pressureMb}hPa`;
-  currentVisibilityDiv.textContent = `${currentWeatherData.visKm}km`;
-  currentHumidityDiv.textContent = `${currentWeatherData.humidity}%`;
-  currentChanceDiv.textContent = `${currentDayData.dailyChanceOfRain}%`;
-  currentSunriseDiv.textContent = `${currentDayData.sunrise}`;
-  currentSunsetDiv.textContent = `${currentDayData.sunset}`;
-
-  forecasts.forEach((tr, index) => {
-    const day = getForecastData(data, index);
-    const conditionImg = document.createElement("img");
-    conditionImg.alt = "condition-icon";
-    conditionImg.src = day.conditionIconURL;
-
-    const conditionTxt = document.createElement("p");
-    conditionTxt.textContent = day.conditionText;
-
-    const lowTemp = document.createElement("p");
-    lowTemp.textContent = code ? `${day.minTempC}°C` : `${day.minTempF}°F`;
-
-    const avgTemp = document.createElement("p");
-    avgTemp.textContent = code ? `${day.avgTempC}°C` : `${day.avgTempF}°F`;
-
-    const highTemp = document.createElement("p");
-    highTemp.textContent = code ? `${day.maxTempC}°C` : `${day.maxTempF}°F`;
-
-    const cells = [...tr.querySelectorAll("td")];
-    const information = [
-      conditionImg,
-      conditionTxt,
-      lowTemp,
-      avgTemp,
-      highTemp,
-    ];
-    let i = 0;
-    cells.forEach((cell, pos) => {
-      if (pos !== 0) {
-        cell.append(information[i]);
-        i += 1;
+      if ("error" in searchData) {
+        return "Please enter a search query"
       }
-    });
-  });
-}
 
-updateDisplay("uruguay");
+      if (Object.keys(searchData).length === 0) {
+        return "No location has been found"
+      }
+
+       return searchData;
+    } catch {
+      // alert("Unable to fetch data check internet connection")
+      throw Error("Unable to fetch data check internet connection");
+    }
+  }
+  
+  async function searchQueryHandler(query) {
+    const location = await getLocation(query)
+    console.log(location)
+   }  
+  // console.log(searchBar)
+
+  searchBar.addEventListener("input", (e) => {
+    // console.log(e.target.value)
+    searchQueryHandler(e.target.value)
+  })
+
+ 
+ 
+  
+ 
+  
+
+  async function updateDisplay(location, code) {
+    // code 1 signals for temperature in celsius
+    // and code 0 signals for temperature in fahrenheit
+    
+  
+    const data = await getWeatherData(location);
+  
+    const currentWeatherData = getCurrentData(data);
+    const locationData = getLocationData(data);
+    const currentDayData = getForecastData(data, 0);
+  
+    locationNameDiv.textContent = locationData.name;
+    locationCountryNameDiv.textContent = locationData.country;
+    currentTemperatureDiv.textContent = code
+      ? `${currentWeatherData.tempC}°C`
+      : `${currentWeatherData.tempF}°F`;
+    currentConditionTextDiv.textContent = currentWeatherData.conditionText;
+    currentPressureDiv.textContent = `${currentWeatherData.pressureMb}hPa`;
+    currentVisibilityDiv.textContent = `${currentWeatherData.visKm}km`;
+    currentHumidityDiv.textContent = `${currentWeatherData.humidity}%`;
+    currentChanceDiv.textContent = `${currentDayData.dailyChanceOfRain}%`;
+    currentSunriseDiv.textContent = `${currentDayData.sunrise}`;
+    currentSunsetDiv.textContent = `${currentDayData.sunset}`;
+  
+    forecasts.forEach((tr, index) => {
+      const day = getForecastData(data, index);
+      const conditionImg = document.createElement("img");
+      conditionImg.alt = "condition-icon";
+      conditionImg.src = day.conditionIconURL;
+  
+      const conditionTxt = document.createElement("p");
+      conditionTxt.textContent = day.conditionText;
+  
+      const lowTemp = document.createElement("p");
+      lowTemp.textContent = code ? `${day.minTempC}°C` : `${day.minTempF}°F`;
+  
+      const avgTemp = document.createElement("p");
+      avgTemp.textContent = code ? `${day.avgTempC}°C` : `${day.avgTempF}°F`;
+  
+      const highTemp = document.createElement("p");
+      highTemp.textContent = code ? `${day.maxTempC}°C` : `${day.maxTempF}°F`;
+  
+      const cells = [...tr.querySelectorAll("td")];
+      const information = [
+        conditionImg,
+        conditionTxt,
+        lowTemp,
+        avgTemp,
+        highTemp,
+      ];
+      let i = 0;
+      cells.forEach((cell, pos) => {
+        if (pos !== 0) {
+          cell.append(information[i]);
+          i += 1;
+        }
+      });
+    });
+  }
+  
+  updateDisplay("slovenia", 1);
+  
+})();
