@@ -11,7 +11,6 @@ async function getWeatherData(location) {
 
     return weatherData;
   } catch {
-    // alert("Unable to fetch data check internet connection")
     throw Error("Unable to fetch data check internet connection");
   }
 }
@@ -81,8 +80,7 @@ function getForecastData(data, day) {
 }
 
 (function () {
-  // const code = 1;
-
+  const loadingDialog = document.querySelector("dialog");
   const locationNameDiv = document.querySelector(".location p:first-child");
   const locationCountryNameDiv = document.querySelector(
     ".location p:nth-child(2)"
@@ -125,7 +123,7 @@ function getForecastData(data, day) {
         { mode: "cors" }
       );
       const searchData = await response.json();
-      console.log(searchData);
+      
 
       if ("error" in searchData) {
         return ["Please enter a search query"];
@@ -137,67 +135,55 @@ function getForecastData(data, day) {
 
       return searchData;
     } catch {
-      // alert("Unable to fetch data check internet connection")
       throw Error("Unable to fetch data check internet connection");
     }
   }
 
-  
-  // console.log(searchBar)
-
   function createLocationList(locations) {
-    dropDownList.innerHTML = ""
-    
+    dropDownList.innerHTML = "";
+
     locations.forEach((item) => {
-      const list = document.createElement("li")
+      const list = document.createElement("li");
       if (typeof item === "string") {
-        list.textContent = item
-      
-        }
+        list.textContent = item;
+      }
 
       if (typeof item === "object") {
-        const {name, country, id} = item
-        console.log(id)
-        list.textContent = `${name}, ${country}`
-        list.setAttribute("id", `id:${id}`)
+        const { name, country, id } = item;
+        
+        list.textContent = `${name}, ${country}`;
+        list.setAttribute("id", `id:${id}`);
       }
 
       dropDownList.append(list);
-    } )
-
-    
+    });
   }
-
-
 
   async function searchQueryHandler(query) {
     const location = await getLocation(query);
-    createLocationList(location)
-    console.log(location);
+    createLocationList(location);
+    
   }
 
   searchBar.addEventListener("input", (e) => {
- 
-    // console.log(e.target.value)
-     searchQueryHandler(e.target.value);
-    // createLocationList(locations);
-    console.log()
+    searchQueryHandler(e.target.value);
+    
     if (e.target.value === "") {
       setTimeout(() => {
-        dropDownList.innerHTML = ""
-      }, 1000)
+        dropDownList.innerHTML = "";
+      }, 1000);
     }
   });
 
   async function updateDisplay(location, code) {
     // code 1 signals for temperature in celsius
     // and code 0 signals for temperature in fahrenheit
-
+    loadingDialog.showModal();
     const data = await getWeatherData(location);
-
+    loadingDialog.close();
     const currentWeatherData = getCurrentData(data);
     const locationData = getLocationData(data);
-    const currentDayData = getForecastData(data, 0);
+    const currentDayData = getForecastData(data, 1);
 
     locationNameDiv.textContent = locationData.name;
     locationCountryNameDiv.textContent = locationData.country;
@@ -241,8 +227,8 @@ function getForecastData(data, day) {
       let i = 0;
       cells.forEach((cell, pos) => {
         if (pos !== 0) {
-          const td = cell
-          td.innerHTML = ""
+          const td = cell;
+          td.innerHTML = "";
           td.append(information[i]);
           i += 1;
         }
@@ -250,9 +236,9 @@ function getForecastData(data, day) {
     });
   }
 
-dropDownList.addEventListener("click", (e) => {
-  updateDisplay(e.target.id, 0)
-})
+  dropDownList.addEventListener("click", (e) => {
+    updateDisplay(e.target.id, 1);
+  });
 
   updateDisplay("id:2107568", 1);
 })();
